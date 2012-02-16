@@ -3,6 +3,7 @@ var reExpr = /([\w\.]+)\s*([\>\<\!\=]\=?)\s*([\w\.]+)/,
     reFalsyWords = /(undefined|null|false)/g,
     reTruthyWords = /(true)/g,
     reWords = /(\w{2,})/,
+    reSillyFn = /0\(.*?\)/g,
     exprLookups = {
         '==': ['equals'],
         '>':  ['gt'],
@@ -134,8 +135,17 @@ Matcher.prototype = {
             match = reWords.exec(text);
         }
         
+        // replace peoples attempts at including functions with 0
+        text = text.replace(reSillyFn, '0');
+        
         // evaluate the expression
-        this.ok = eval(text);
+        try {
+            this.ok = eval(text);
+        }
+        catch (e) {
+            this.ok = false;
+            this._errtext = text;
+        }
         
         return this;
     }
