@@ -6,7 +6,7 @@ describe('simple equality tests', function() {
     it('can test an object for equality', function() {
         var result = matchme(testdata[0], 'name == fred');
         
-        expect(result).to.be.truthy;
+        expect(result).to.be.ok;
     });
     
     it('can extract matching objects from an array', function() {
