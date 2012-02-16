@@ -10,7 +10,7 @@ Matching is done at an object level against object properties, e.g.
 var test = { name: 'Ted', age: 40 };
 
 matchme(test, 'name == ted'); // true
-matchme(test, 'age > 25); // true
+matchme(test, 'age > 25'); // true
 matchme(test, { caseSensitive: true }, 'name == ted'); // false
 matchme(test, 'name == ted && age > 45'); // false
 ```
