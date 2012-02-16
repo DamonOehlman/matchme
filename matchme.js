@@ -4,9 +4,12 @@
     
     var reExpr = /([\w\.]+)\s*([\>\<\!\=]\=?)\s*([\w\.]+)/,
         exprLookups = {
-            '==': 'equals',
-            '>':  'gt',
-            '>=': 'gte'
+            '==': ['equals'],
+            '>':  ['gt'],
+            '>=': ['gte'],
+            '<':  ['lt'],
+            '<=': ['lte'],
+            '!=': ['equals', 'not']
         };
     
     function Matcher(target, opts) {
@@ -33,6 +36,20 @@
             return this;
         },
         
+        lt: function(prop, value, result) {
+            result = result || this;
+            result.passes = result.passes && this.target && this.target[prop] < value;
+            
+            return this;
+        },
+        
+        lte: function(prop, value, result) {
+            result = result || this;
+            result.passes = result.passes && this.target && this.target[prop] <= value;
+            
+            return this;
+        },
+        
         equals: function(prop, value, result) {
             result = result || this;
             
@@ -53,17 +70,33 @@
             return this;
         },
         
+        not: function(prop, value, result) {
+            // invert the passes state
+            result = result || this;
+            result.passes = !result.passes;
+            
+            return this;
+        },
+        
         query: function(text) {
             var match = reExpr.exec(text);
+                
             while (match) {
-                var fnname = exprLookups[match[2]],
-                    evaluator = this[fnname],
+                var fns = exprLookups[match[2]] || [],
                     result = {
-                        passes: evaluator ? true : false
-                    };
+                        passes: fns.length > 0
+                    },
+                    val1 = parseFloat(match[1]) || match[1],
+                    val2 = parseFloat(match[3]) || match[3];
+                
+                // iterate through the required functions in order and evaluate the result
+                for (var ii = 0, count = fns.length; ii < count; ii++) {
+                    var evaluator = this[fns[ii]];
                     
-                if (evaluator) {
-                    evaluator.call(this, match[1], match[3], result);
+                    // if we have the evaluator, then run it
+                    if (evaluator) {
+                        evaluator.call(this, val1, val2, result);
+                    }
                 }
                 
                 text = text.slice(0, match.index) + result.passes + text.slice(match.index + match[0].length);
