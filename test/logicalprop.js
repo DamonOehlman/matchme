@@ -20,4 +20,16 @@ describe('standalone logical tests', function() {
         
         expect(result).to.be.ok;
     });
+    
+    it('fred is older than 15 and !bald - ok', function() {
+        var result = matchme(testdata.fred, 'age > 15 && (!bald)');
+        
+        expect(result).to.be.ok;
+    });
+    
+    it('fred is older than 15 and bald - not ok', function() {
+        var result = matchme(testdata.fred, 'bald && age > 15');
+        
+        expect(result).to.not.be.ok;
+    });
 });
