@@ -2,7 +2,7 @@ var matchme = require('matchme'),
     expect = require('chai').expect,
     testdata = require('./helpers/testdata');
     
-describe('simple equality tests', function() {
+describe('== tests', function() {
     it('can test an object for equality', function() {
         var result = matchme(testdata.fred, 'name == fred');
         
