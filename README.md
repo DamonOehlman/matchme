@@ -1,6 +1,33 @@
 # Match Me
 
-This is an experimental library that will allow object matching and filtering based on a simple query language plus chainable function interface.  
+This is an experimental library that will allow object matching based on a simple query language plus chainable function interface.  
 
-For examples of how it 
+## Simple Example
 
+Matching is done at an object level against object properties, e.g.
+
+```js
+var test = { name: 'Ted', age: 40 };
+
+matchme(test, 'name == ted'); // true
+matchme(test, 'age > 25); // true
+matchme(test, { caseSensitive: true }, 'name == ted'); // false
+matchme(test, 'name == ted && age > 45'); // false
+```
+
+In addition `matchme` can be used in conjunction the filter function (both the native JS implemenation or underscores):
+
+```js
+var people = [
+    { name: 'Ted', age: 40 },
+    { name: 'Bill', age: 42 }
+];
+
+people.filter(matchme.filter('age > 40')); // [ { name: 'Bill', age: 42 }]
+```
+
+For more complicated examples, I'd recommend having a look at the tests.
+
+## A Note regarding Eval
+
+In general, the use of `eval` is considered evil.  I have avoided using it for many, many years.  That said matchme makes use of eval to simplifying the parsing required to properly deal with complex expressions (BOMDAS, etc).  At this stage the implementation has not been hardened against potential security problems but this is on the roadmap.
