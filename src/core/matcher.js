@@ -1,6 +1,7 @@
 var reExpr = /([\w\.]+)\s*([\>\<\!\=]\=?)\s*([\w\.]+)/,
     exprLookups = {
         '==': 'equals',
+        '>':  'gt',
         '>=': 'gte'
     };
 
@@ -14,6 +15,13 @@ function Matcher(target, opts) {
 }
 
 Matcher.prototype = {
+    gt: function(prop, value, result) {
+        result = result || this;
+        result.passes = result.passes && this.target && this.target[prop] > value;
+        
+        return this;
+    },
+    
     gte: function(prop, value, result) {
         result = result || this;
         result.passes = result.passes && this.target && this.target[prop] >= value;
