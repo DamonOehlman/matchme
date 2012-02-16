@@ -1,4 +1,5 @@
 var reExpr = /([\w\.]+)\s*([\>\<\!\=]\=?)\s*([\w\.]+)/,
+    reBool = /^(true|false)$/i,
     exprLookups = {
         '==': ['equals'],
         '>':  ['gt'],
@@ -84,6 +85,11 @@ Matcher.prototype = {
                 },
                 val1 = parseFloat(match[1]) || match[1],
                 val2 = parseFloat(match[3]) || match[3];
+                
+            // if value 2 is a boolean, then parse it
+            if (reBool.test(val2)) {
+                val2 = val2 == 'true';
+            }
             
             // iterate through the required functions in order and evaluate the result
             for (var ii = 0, count = fns.length; ii < count; ii++) {
