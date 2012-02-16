@@ -17,7 +17,7 @@
         matcher = new Matcher(target, opts);
         
         if (typeof query != 'undefined') {
-            return matcher.query(query).passes;
+            return matcher.query(query).ok;
         }
         else {
             return matcher;
@@ -42,7 +42,7 @@
             var results = [];
             for (var ii = 0, count = array.length; ii < count; ii++) {
                 matcher.target = array[ii];
-                if (matcher.query(query).passes) {
+                if (matcher.query(query).ok) {
                     results[results.length] = array[ii];
                 }
             }
@@ -54,7 +54,7 @@
                 // update the matcher target
                 matcher.target = target;
                 
-                return matcher.query(query).passes;
+                return matcher.query(query).ok;
             };
         }
     };

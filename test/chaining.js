@@ -10,7 +10,7 @@ describe('chaining', function() {
             .equals('name', 'fred')
             .gt('age', 15);
 
-        expect(matcher.passes).to.be.ok;
+        expect(matcher.ok).to.be.ok;
     });
     
     it('chaining methods works in a logical AND kind of way', function() {
@@ -20,6 +20,6 @@ describe('chaining', function() {
             .equals('name', 'fred')
             .gt('age', 25);
 
-        expect(matcher.passes).to.not.be.ok;
+        expect(matcher.ok).to.not.be.ok;
     });
 });
