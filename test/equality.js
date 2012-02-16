@@ -26,4 +26,10 @@ describe('== tests', function() {
         
         expect(matcher.equals('name', 'Fred').ok).to.be.ok;
     });
+    
+    it('can test using quoted strings', function() {
+        var result = matchme(testdata.fred, 'pet == "flying badger"');
+       
+        expect(result).to.be.ok;
+    });
 });

@@ -3,6 +3,9 @@
     var version = "!{pkg:version}";
     
     var reExpr = /([\w\.]+)\s*([\>\<\!\=]\=?)\s*([\w\.]+)/,
+        reQuotedExpr = /([\w\.]+)\s*([\>\<\!\=]\=?)\s*\"([^\"]+)\"/,
+        reRegexExpr = /([\w\.]+)\s*([\=\!]\~)\s*(\/[^\s]+\/\w*)/,
+        reRegex = /^\/(.*)\/(\w*)$/,
         reBool = /^(true|false)$/i,
         reFalsyWords = /(undefined|null|false)/g,
         reTruthyWords = /(true)/g,
@@ -14,7 +17,9 @@
             '>=': ['gte'],
             '<':  ['lt'],
             '<=': ['lte'],
-            '!=': ['equals', 'not']
+            '!=': ['equals', 'not'],
+            '=~': ['regex'],
+            '!~': ['regex', 'not']
         },
         wordReplacements = {
             and: '&&',
@@ -31,6 +36,39 @@
     }
     
     Matcher.prototype = {
+        _evaluateExpressions: function(text, expr) {
+            var match = expr.exec(text);
+                
+            while (match) {
+                var fns = exprLookups[match[2]] || [],
+                    result = {
+                        ok: fns.length > 0
+                    },
+                    val1 = parseFloat(match[1]) || match[1],
+                    val2 = parseFloat(match[3]) || match[3];
+                    
+                // if value 2 is a boolean, then parse it
+                if (reBool.test(val2)) {
+                    val2 = val2 == 'true';
+                }
+                
+                // iterate through the required functions in order and evaluate the result
+                for (var ii = 0, count = fns.length; ii < count; ii++) {
+                    var evaluator = this[fns[ii]];
+                    
+                    // if we have the evaluator, then run it
+                    if (evaluator) {
+                        evaluator.call(this, val1, val2, result);
+                    }
+                }
+                
+                text = text.slice(0, match.index) + result.ok + text.slice(match.index + match[0].length);
+                match = expr.exec(text);
+            }
+            
+            return text;
+        },
+        
         gt: function(prop, value, result) {
             result = result || this;
             result.ok = result.ok && this.target && this.target[prop] > value;
@@ -87,35 +125,27 @@
             return this;
         },
         
-        query: function(text) {
-            var match = reExpr.exec(text);
-                
-            while (match) {
-                var fns = exprLookups[match[2]] || [],
-                    result = {
-                        ok: fns.length > 0
-                    },
-                    val1 = parseFloat(match[1]) || match[1],
-                    val2 = parseFloat(match[3]) || match[3];
-                    
-                // if value 2 is a boolean, then parse it
-                if (reBool.test(val2)) {
-                    val2 = val2 == 'true';
+        regex: function(prop, value, result) {
+            result = result || this;
+            
+            // if the result is still ok, then check the regex
+            if (result.ok && this.target) {
+                var match = reRegex.exec(value);
+                if (match) {
+                    result.ok = new RegExp(match[1], match[2]).test(this.target[prop]);
                 }
-                
-                // iterate through the required functions in order and evaluate the result
-                for (var ii = 0, count = fns.length; ii < count; ii++) {
-                    var evaluator = this[fns[ii]];
-                    
-                    // if we have the evaluator, then run it
-                    if (evaluator) {
-                        evaluator.call(this, val1, val2, result);
-                    }
-                }
-                
-                text = text.slice(0, match.index) + result.ok + text.slice(match.index + match[0].length);
-                match = reExpr.exec(text);
             }
+            
+            return this;
+        },
+        
+        query: function(text) {
+            var match;
+            
+            // evaluate expressions
+            text = this._evaluateExpressions(text, reQuotedExpr);
+            text = this._evaluateExpressions(text, reRegexExpr);
+            text = this._evaluateExpressions(text, reExpr);
             
             // replace falsy words with 0s and truthy words with 1s
             text = text.replace(reFalsyWords, '0').replace(reTruthyWords, '1');
@@ -144,7 +174,7 @@
             
             // evaluate the expression
             try {
-                this.ok = eval(text);
+                this.ok = eval(text) == true;
             }
             catch (e) {
                 this.ok = false;
