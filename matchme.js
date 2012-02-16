@@ -1,4 +1,8 @@
-// A dummy header
+// matchme 0.0.1
+// ────────────────────────────────────────────────────────────────────────────────────────
+// Simple Object Query Language
+// ────────────────────────────────────────────────────────────────────────────────────────
+
 (function (glob) {
     var version = "!{pkg:version}";
     
@@ -130,9 +134,20 @@
             
             // if the result is still ok, then check the regex
             if (result.ok && this.target) {
-                var match = reRegex.exec(value);
-                if (match) {
-                    result.ok = new RegExp(match[1], match[2]).test(this.target[prop]);
+                var regex = value;
+                
+                // if the regex is currently a string, then parse into a regular expression
+                if (typeof regex == 'string' || regex instanceof String) {
+                    var match = reRegex.exec(value);
+                    if (match) {
+                        regex = new RegExp(match[1], match[2]);
+                    }
+                }
+                
+                // if we now have a regex, then update the result ok
+                console.log(regex);
+                if (regex instanceof RegExp) {
+                    result.ok = regex.test(this.target[prop]);
                 }
             }
             
