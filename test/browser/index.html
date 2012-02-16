@@ -1,0 +1,29 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mocha Tests</title>
+  <link rel="stylesheet" href="lib/mocha.css" />
+  <script src="../../matchme.js"></script>
+  <script src="../helpers/testdata.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src="lib/chai.js"></script>
+  <script src="lib/mocha.js"></script>
+  <script>mocha.setup('bdd');</script>
+  <script>
+  var reLastPart = /.*\/(.*)$/;
+  
+  function require(module) {
+      return window[module.replace(reLastPart, '$1')];
+  }
+  </script>
+  <script src="../equality.js"></script>
+  <script>
+    $(function () {
+      mocha.run();
+    });
+  </script>
+</head>
+<body>
+  <div id="mocha"></div>
+</body>
+</html>
