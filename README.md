@@ -31,3 +31,8 @@ For more complicated examples, I'd recommend having a look at the tests.
 ## A Note regarding Eval
 
 In general, the use of `eval` is considered evil.  I have avoided using it for many, many years.  That said matchme makes use of eval to simplifying the parsing required to properly deal with complex expressions (BOMDAS, etc).  At this stage the implementation has not been hardened against potential security problems but this is on the roadmap.
+
+## Roadmap
+
+- Protect the eval execution from nasty code
+- Capture single word expressions for a truthiness test
