@@ -3,11 +3,11 @@ function Matcher(target) {
 }
 
 Matcher.prototype = {
-    gte: function(value) {
+    gte: function(prop, value) {
         
     },
     
-    equals: function(value) {
+    equals: function(prop, value) {
         
     },
     
