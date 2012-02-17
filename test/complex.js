@@ -1,8 +1,8 @@
-var matchme = require('matchme'),
-    expect = require('expect.js'),
-    testdata = require('./helpers/testdata');
-    
 describe('complex expressions', function() {
+    var matchme = require('matchme'),
+        expect = require('expect.js'),
+        testdata = require('./helpers/testdata');
+
     it('name is bob or fred (check fred)', function() {
         var result = matchme(testdata.fred, '(name == fred) || (name == bob)');
         

@@ -1,8 +1,8 @@
-var matchme = require('matchme'),
-    expect = require('expect.js'),
-    testdata = require('./helpers/testdata');
-    
 describe('chaining', function() {
+    var matchme = require('matchme'),
+        expect = require('expect.js'),
+        testdata = require('./helpers/testdata');
+
     it('can chain matcher methods together', function() {
         var matcher = matchme(testdata.fred);
         
