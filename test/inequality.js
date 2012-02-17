@@ -1,8 +1,8 @@
-var matchme = require('matchme'),
-    expect = require('expect.js'),
-    testdata = require('./helpers/testdata');
-    
 describe('!= tests', function() {
+    var matchme = require('matchme'),
+        expect = require('expect.js'),
+        testdata = require('./helpers/testdata');
+
     it('fred != bob is ok', function() {
         var result = matchme(testdata.fred, 'name != bob');
         

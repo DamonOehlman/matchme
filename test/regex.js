@@ -1,8 +1,8 @@
-var matchme = require('matchme'),
-    expect = require('expect.js'),
-    testdata = require('./helpers/testdata');
-    
 describe('regex (=~) tests', function() {
+    var matchme = require('matchme'),
+        expect = require('expect.js'),
+        testdata = require('./helpers/testdata');
+
     it('fred starts with an f - ok', function() {
         var result = matchme(testdata.fred, 'name =~ /^f/i');
         
