@@ -1,5 +1,5 @@
 var matchme = require('matchme'),
-    expect = require('chai').expect,
+    expect = require('expect.js'),
     testdata = require('./helpers/testdata'),
     testArray = [testdata.fred, testdata.bob],
     _ = require('underscore');

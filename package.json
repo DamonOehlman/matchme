@@ -3,7 +3,7 @@
   "description": "Simple Object Query Language",
   "author": "Damon Oehlman <damon.oehlman@sidelab.com>",
   "tags": [ "query", "match", "filter" ],
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "matchme.js",
   "engines": {
     "node": ">= 0.4.x < 0.7.0"
@@ -14,7 +14,7 @@
   "devDependencies": {
     "interleave": "0.1.x",
     "uglify-js": "*",
-    "chai": "0.3.x",
+    "expect.js": "0.1.x",
     "underscore": "1.3.x"
   },
 

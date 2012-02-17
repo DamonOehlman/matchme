@@ -7,14 +7,18 @@
   <script src="../helpers/testdata.js"></script>
   <script src="../../node_modules/underscore/underscore.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script src="lib/chai.js"></script>
+  <script src="lib/expect.js"></script>
   <script src="lib/mocha.js"></script>
   <script>mocha.setup('bdd');</script>
   <script>
   var reLastPart = /.*\/(.*)$/;
   
   function require(module) {
-      return window[module.replace('underscore', '_').replace(reLastPart, '$1')];
+      return window[module
+        .replace('underscore', '_')
+        .replace(/\.js/, '')
+        .replace(reLastPart, '$1')
+    ];
   }
   </script>
   <script src="../equality.js"></script>

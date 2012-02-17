@@ -1,5 +1,5 @@
 var matchme = require('matchme'),
-    expect = require('chai').expect,
+    expect = require('expect.js'),
     testdata = require('./helpers/testdata');
     
 describe('chaining', function() {
@@ -10,7 +10,7 @@ describe('chaining', function() {
             .equals('name', 'fred')
             .gt('age', 15);
 
-        expect(matcher.ok).to.be.ok;
+        expect(matcher.ok).to.be.ok();
     });
     
     it('chaining methods works in a logical AND kind of way', function() {
@@ -20,6 +20,6 @@ describe('chaining', function() {
             .equals('name', 'fred')
             .gt('age', 25);
 
-        expect(matcher.ok).to.not.be.ok;
+        expect(matcher.ok).to.not.be.ok();
     });
 });
