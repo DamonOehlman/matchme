@@ -137,7 +137,6 @@ Matcher.prototype = {
             }
             
             // if we now have a regex, then update the result ok
-            console.log(regex);
             if (regex instanceof RegExp) {
                 result.ok = regex.test(this.target[prop]);
             }
