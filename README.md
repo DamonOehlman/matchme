@@ -28,7 +28,7 @@ var people = [
 people.filter(matchme.filter('age > 40')); // [ { name: 'Bill', age: 42 }]
 ```
 
-For more complicated examples, I'd recommend having a look at the tests.
+For more complicated examples, I'd recommend having a look at the tests (which run from both the browser and node).
 
 ## A Note regarding Eval
 
