@@ -1,6 +1,8 @@
 # Match Me
 
-This is an experimental library that will allow object matching based on a simple query language plus chainable function interface.  
+This is an experimental library that will allow object matching based on a simple query language plus chainable function interface.
+
+<a href="http://travis-ci.org/#!/DamonOehlman/matchme"><img src="https://secure.travis-ci.org/DamonOehlman/matchme.png" alt="Build Status"></a>
 
 ## Simple Example
 

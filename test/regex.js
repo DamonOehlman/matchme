@@ -29,6 +29,10 @@ describe('regex (=~) tests', function() {
 });
 
 describe('negative regex (!~) tests', function() {
+    var matchme = require('matchme'),
+        expect = require('expect.js'),
+        testdata = require('./helpers/testdata');
+    
     it('fred does not start with an f - not ok', function() {
         var result = matchme(testdata.fred, 'name !~ /^f/i');
         

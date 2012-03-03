@@ -26,5 +26,7 @@
     "url": "http://github.com/DamonOehlman/textsetter/issues"
   },
   
+  "scripts": { "test": "mocha --reporter spec" },
+  
   "contributors": []
 }
