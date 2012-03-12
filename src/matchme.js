@@ -1,5 +1,5 @@
 //@header
-(function (glob) {
+;(function (glob) {
     var version = "!{pkg:version}";
     
     //= core/matcher
