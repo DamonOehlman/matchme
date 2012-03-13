@@ -1,5 +1,5 @@
 describe('<= tests', function() {
-    var matchme = require('matchme'),
+    var matchme = require('../matchme'),
         expect = require('expect.js'),
         testdata = require('./helpers/testdata');
 
