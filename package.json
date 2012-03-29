@@ -4,7 +4,7 @@
   "author": "Damon Oehlman <damon.oehlman@sidelab.com>",
   "tags": [ "query", "match", "filter" ],
   "version": "0.0.3",
-  "main": "matchme.js",
+  "main": "pkg/cjs/matchme",
   "engines": {
     "node": ">= 0.4.x < 0.7.0"
   },
