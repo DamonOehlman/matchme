@@ -11,6 +11,16 @@ var testdata = {
         pet: 'Jumping Squirrel',
         age: 40,
         bald: true
+    },
+    
+    location1: {
+        latitude: -27.61091533,
+        longitude: 153.1017066
+    },
+    
+    location2: {
+        latitude: -28.45453131,
+        longitude: 153.1321275
     }
 };
 

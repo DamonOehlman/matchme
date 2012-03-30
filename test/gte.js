@@ -26,4 +26,15 @@ describe('>= tests', function() {
         
         expect(result).to.be.ok();
     });
+    
+    it('location 1 found', function() {
+        var result = matchme(testdata.location1, 'latitude >= -28');
+        expect(result).to.be.ok();
+    });
+    
+    it('location 2 found', function() {
+        var result = matchme(testdata.location2, 'latitude >= -29');
+        
+        expect(result).to.be.ok();
+    });
 });
