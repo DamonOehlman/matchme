@@ -22,10 +22,10 @@
 
   "repository": {
     "type": "git",
-    "url": "git://github.com/DamonOehlman/textsetter.git"
+    "url": "git://github.com/DamonOehlman/matchme.git"
   },
   "bugs": {
-    "url": "http://github.com/DamonOehlman/textsetter/issues"
+    "url": "http://github.com/DamonOehlman/matchme/issues"
   },
   
   "scripts": { "test": "mocha --reporter spec" },
