@@ -32,7 +32,7 @@ matchme.filter = function(array, query, opts) {
         opts = query;
         query = array;
         array = null;
-    };
+    }
     
     // create the matcher on a null target
     matcher = new Matcher(null, opts);

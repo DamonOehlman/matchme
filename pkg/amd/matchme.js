@@ -234,7 +234,7 @@ define('matchme', [], function() {
               var props = prop.split('.');
               if (props.length > 1) {
                   value = this.target;
-                  while (props.length) {
+                  while (value && props.length) {
                       value = value[props.shift()];
                   }
               }
@@ -276,7 +276,7 @@ define('matchme', [], function() {
           opts = query;
           query = array;
           array = null;
-      };
+      }
       
       // create the matcher on a null target
       matcher = new Matcher(null, opts);

@@ -233,7 +233,7 @@ Matcher.prototype = {
             var props = prop.split('.');
             if (props.length > 1) {
                 value = this.target;
-                while (props.length) {
+                while (value && props.length) {
                     value = value[props.shift()];
                 }
             }
