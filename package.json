@@ -2,15 +2,17 @@
   "name": "matchme",
   "description": "Simple Object Query Language",
   "author": "Damon Oehlman <damon.oehlman@sidelab.com>",
-  "tags": [ "query", "match", "filter" ],
-  "version": "0.1.0",
+  "tags": [
+    "query",
+    "match",
+    "filter"
+  ],
+  "version": "0.1.1",
   "main": "pkg/cjs/matchme",
   "engines": {
     "node": ">= 0.4.x < 0.7.0"
   },
-  "dependencies": {
-  },
-
+  "dependencies": {},
   "devDependencies": {
     "interleave": "0.1.x",
     "uglify-js": "*",
@@ -19,7 +21,6 @@
     "mocha": "*",
     "chai": "*"
   },
-
   "repository": {
     "type": "git",
     "url": "git://github.com/DamonOehlman/matchme.git"
@@ -27,8 +28,9 @@
   "bugs": {
     "url": "http://github.com/DamonOehlman/matchme/issues"
   },
-  
-  "scripts": { "test": "mocha --reporter spec" },
-  
-  "contributors": []
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "contributors": [],
+  "optionalDependencies": {}
 }
