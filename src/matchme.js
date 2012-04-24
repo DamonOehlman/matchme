@@ -1,5 +1,8 @@
 //= core/matcher
 
+/*
+Create a matcher that will execute against the specified target.
+*/
 function matchme(target, opts, query) {
     var matcher;
     

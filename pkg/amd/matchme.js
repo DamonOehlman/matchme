@@ -1,6 +1,6 @@
 define('matchme', [], function() {
-  var reExpr = /([\w\.]+)\s*([\>\<\!\=]\=?)\s*([\-\w\.]+)/,
-      reQuotedExpr = /([\w\.]+)\s*([\>\<\!\=]\=?)\s*\"([^\"]+)\"/,
+  var reExpr = /([\w\.]+)\s*([\><\!\=]\=?)\s*([\-\w\.]+)/,
+      reQuotedExpr = /([\w\.]+)\s*([\><\!\=]\=?)\s*\"([^\"]+)\"/,
       reRegexExpr = /([\w\.]+)\s*([\=\!]\~)\s*(\/[^\s]+\/\w*)/,
       reRegex = /^\/(.*)\/(\w*)$/,
       reBool = /^(true|false)$/i,
@@ -23,6 +23,16 @@ define('matchme', [], function() {
           or: '||'
       };
   
+  /**
+   * class Matcher
+   *
+   **/
+   
+  /**
+   * new Matcher(target, [opts])
+   * - target (Object): the object that match operations will be checked against
+   *
+   **/
   function Matcher(target, opts) {
       // initialise options
       this.opts = opts || {};
@@ -33,72 +43,60 @@ define('matchme', [], function() {
   }
   
   Matcher.prototype = {
-      _evaluateExpressions: function(text, expr) {
-          var match = expr.exec(text);
-              
-          while (match) {
-              var fns = exprLookups[match[2]] || [],
-                  result = {
-                      ok: fns.length > 0
-                  },
-                  val1 = parseFloat(match[1]) || match[1],
-                  val2 = parseFloat(match[3]) || match[3];
-                  
-              // if value 2 is a boolean, then parse it
-              if (reBool.test(val2)) {
-                  val2 = val2 == 'true';
-              }
-              
-              // iterate through the required functions in order and evaluate the result
-              for (var ii = 0, count = fns.length; ii < count; ii++) {
-                  var evaluator = this[fns[ii]];
-                  
-                  // if we have the evaluator, then run it
-                  if (evaluator) {
-                      evaluator.call(this, val1, val2, result);
-                  }
-              }
-              
-              text = text.slice(0, match.index) + result.ok + text.slice(match.index + match[0].length);
-              match = expr.exec(text);
-          }
-          
-          return text;
-      },
-      
+      /** chainable
+      * Matcher#gt(prop, value, [result])
+      *
+      * Check whether the specified property of the target object is greater than 
+      * the specified value.  If the optional result argument is passed to the function
+      * then the result is passed back in that object. If not the result is stored in
+      * the local `ok` property of the matcher instance.  Other comparison methods use
+      * the same principle as this function.
+      **/
       gt: function(prop, value, result) {
           result = result || this;
-          result.ok = result.ok && this.target && this.target[prop] > value;
+          result.ok = result.ok && this.target && this._val(prop) > value;
           
           return this;
       },
       
+      /** chainable
+      * Matcher#gte(prop, value, [result])
+      *
+      * Greater than or equal to check.
+      **/
       gte: function(prop, value, result) {
           result = result || this;
-          result.ok = result.ok && this.target && this.target[prop] >= value;
+          result.ok = result.ok && this.target && this._val(prop) >= value;
           
           return this;
       },
       
+      /** chainable
+      * Matcher#lt(prop, value, [result])
+      *
+      * Less than property value check
+      **/
       lt: function(prop, value, result) {
           result = result || this;
-          result.ok = result.ok && this.target && this.target[prop] < value;
+          result.ok = result.ok && this.target && this._val(prop) < value;
           
           return this;
       },
       
+      // Test for a property being equal or less than the specified value
       lte: function(prop, value, result) {
           result = result || this;
-          result.ok = result.ok && this.target && this.target[prop] <= value;
+          result.ok = result.ok && this.target && this._val(prop) <= value;
           
           return this;
       },
       
-      equals: function(prop, value, result) {
+      // Test for equality of the specified property
+      equals: function(prop, value, result) { 
           result = result || this;
           
           if (result.ok && this.target) {
-              var testVal = this.target[prop],
+              var testVal = this._val(prop),
                   strings = (typeof testVal == 'string' || testVal instanceof String) &&
                       (typeof value == 'string' || value instanceof String);
   
@@ -139,7 +137,7 @@ define('matchme', [], function() {
               
               // if we now have a regex, then update the result ok
               if (regex instanceof RegExp) {
-                  result.ok = regex.test(this.target[prop]);
+                  result.ok = regex.test(this._val(prop));
               }
           }
           
@@ -189,10 +187,66 @@ define('matchme', [], function() {
           }
           
           return this;
+      },
+      
+      /** internal
+      * Matcher#_evaluateExpressions(text, expr)
+      *
+      **/
+      _evaluateExpressions: function(text, expr) {
+          var match = expr.exec(text);
+              
+          while (match) {
+              var fns = exprLookups[match[2]] || [],
+                  result = {
+                      ok: fns.length > 0
+                  },
+                  val1 = parseFloat(match[1]) || match[1],
+                  val2 = parseFloat(match[3]) || match[3];
+                  
+              // if value 2 is a boolean, then parse it
+              if (reBool.test(val2)) {
+                  val2 = val2 == 'true';
+              }
+              
+              // iterate through the required functions in order and evaluate the result
+              for (var ii = 0, count = fns.length; ii < count; ii++) {
+                  var evaluator = this[fns[ii]];
+                  
+                  // if we have the evaluator, then run it
+                  if (evaluator) {
+                      evaluator.call(this, val1, val2, result);
+                  }
+              }
+              
+              text = text.slice(0, match.index) + result.ok + text.slice(match.index + match[0].length);
+              match = expr.exec(text);
+          }
+          
+          return text;
+      },
+      
+      _val: function(prop) {
+          var value = this.target[prop];
+  
+          // if the value is undefined, we'll attempt looking for nested properties
+          if (typeof value == 'undefined') {
+              var props = prop.split('.');
+              if (props.length > 1) {
+                  value = this.target;
+                  while (props.length) {
+                      value = value[props.shift()];
+                  }
+              }
+          }
+          
+          return value;
       }
   };
   
-  
+  /*
+  Create a matcher that will execute against the specified target.
+  */
   function matchme(target, opts, query) {
       var matcher;
       

@@ -15,15 +15,21 @@ var testdata = {
     
     location1: {
         latitude: -27.61091533,
-        longitude: 153.1017066
+        longitude: 153.1017066,
+        area: {
+            name: 'Brisbane'
+        }
     },
     
     location2: {
         latitude: -28.45453131,
-        longitude: 153.1321275
+        longitude: 153.1321275,
+        area: {
+            name: 'Border Ranges'
+        }
     }
 };
 
 if (typeof module != 'undefined' && module.exports) {
     module.exports = testdata;
-};
+}
