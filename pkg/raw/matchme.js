@@ -5,7 +5,7 @@ var reExpr = /([\w\.]+)\s*([\><\!\=]\=?)\s*([\-\w\.]+)/,
     reBool = /^(true|false)$/i,
     reFalsyWords = /(undefined|null|false)/g,
     reTruthyWords = /(true)/g,
-    reWords = /(\w{2,})/,
+    reWords = /([\w\.]{2,})/,
     reSillyFn = /0\(.*?\)/g,
     exprLookups = {
         '==': ['equals'],
@@ -161,7 +161,7 @@ Matcher.prototype = {
             
             // if we don't have a replacement for a word then look for the value of the property on the target
             if ((! replacement) && this.target) {
-                replacement = this.target[match[0]];
+                replacement = this._val(match[0]) ? true : false;
             }
             
             text = text.slice(0, match.index) + replacement + text.slice(match.index + match[0].length);

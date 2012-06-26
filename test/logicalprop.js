@@ -32,4 +32,10 @@ describe('standalone logical tests', function() {
         
         expect(result).to.not.be.ok();
     });
+    
+    it('can test for truthiness of property existence', function() {
+        var result = matchme(testdata, 'fred.pet');
+        
+        expect(result).to.be.ok();
+    });
 });
