@@ -7,7 +7,7 @@
     "match",
     "filter"
   ],
-  "version": "0.1.2",
+  "version": "0.1.3",
   "main": "pkg/cjs/matchme",
   "engines": {
     "node": ">= 0.4.x < 0.9.0"
