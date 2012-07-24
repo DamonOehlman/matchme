@@ -1,5 +1,5 @@
 describe('underscore filter', function() {
-    var matchme = require('../pkg/cjs/matchme'),
+    var matchme = require('../dist/commonjs/matchme'),
         expect = require('expect.js'),
         testdata = require('./helpers/testdata'),
         testArray = [testdata.fred, testdata.bob],

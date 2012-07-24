@@ -8,7 +8,7 @@
     "filter"
   ],
   "version": "0.1.3",
-  "main": "pkg/cjs/matchme",
+  "main": "dist/commonjs/matchme",
   "engines": {
     "node": ">= 0.4.x < 0.9.0"
   },
@@ -31,6 +31,5 @@
   "scripts": {
     "test": "mocha --reporter spec"
   },
-  "contributors": [],
-  "optionalDependencies": {}
+  "contributors": []
 }

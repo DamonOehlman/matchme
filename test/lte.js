@@ -1,5 +1,5 @@
 describe('<= tests', function() {
-    var matchme = require('../pkg/cjs/matchme'),
+    var matchme = require('../dist/commonjs/matchme'),
         expect = require('expect.js'),
         testdata = require('./helpers/testdata');
 

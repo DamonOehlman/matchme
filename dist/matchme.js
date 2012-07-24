@@ -1,3 +1,5 @@
+
+// req: 
 var reExpr = /([\w\.]+)\s*([\><\!\=]\=?)\s*([\-\w\.]+)/,
     reQuotedExpr = /([\w\.]+)\s*([\><\!\=]\=?)\s*\"([^\"]+)\"/,
     reRegexExpr = /([\w\.]+)\s*([\=\!]\~)\s*(\/[^\s]+\/\w*)/,
@@ -300,5 +302,3 @@ matchme.filter = function(array, query, opts) {
         };
     }
 };
-
-module.exports = matchme;
