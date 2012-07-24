@@ -7,7 +7,7 @@
     "match",
     "filter"
   ],
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "dist/commonjs/matchme",
   "engines": {
     "node": ">= 0.4.x < 0.9.0"
