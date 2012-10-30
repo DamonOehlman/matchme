@@ -2,7 +2,7 @@
   "name": "matchme",
   "repo": "DamonOehlman/matchme",
   "description": "Simple Object Query Language",
-  "version": "0.1.3",
+  "version": "0.1.6",
   "keywords": [
     "query",
     "match",
