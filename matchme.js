@@ -1,6 +1,26 @@
+/* ~matchme~
+ * 
+ * Simple Object Query Language
+ * 
+ * -meta---
+ * version:    0.1.5
+ * builddate:  2012-10-30T04:55:33.670Z
+ * generator:  interleave@0.5.23
+ * 
+ * 
+ * 
+ */ 
 
-// req: 
-(function(glob) {
+// umdjs returnExports pattern: https://github.com/umdjs/umd/blob/master/returnExports.js
+(function (root, factory) {
+    if (typeof exports === 'object') {
+        module.exports = factory();
+    } else if (typeof define === 'function' && define.amd) {
+        define([], factory);
+    } else {
+        root['matchme'] = factory();
+    }
+}(this, function () {
     var reExpr = /([\w\.]+)\s*([\><\!\=]\=?)\s*([\-\w\.]+)/,
         reQuotedExpr = /([\w\.]+)\s*([\><\!\=]\=?)\s*\"([^\"]+)\"/,
         reRegexExpr = /([\w\.]+)\s*([\=\!]\~)\s*(\/[^\s]+\/\w*)/,
@@ -304,7 +324,5 @@
         }
     };
     
-    if (typeof matchme != 'undefined') {
-        glob.matchme = matchme;
-    }
-}(this));
+    return typeof matchme != 'undefined' ? matchme : undefined;
+}));

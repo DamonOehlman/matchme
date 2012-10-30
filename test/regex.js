@@ -1,5 +1,5 @@
 describe('regex (=~) tests', function() {
-    var matchme = require('../dist/commonjs/matchme'),
+    var matchme = require('../matchme'),
         expect = require('expect.js'),
         testdata = require('./helpers/testdata');
 
@@ -29,7 +29,7 @@ describe('regex (=~) tests', function() {
 });
 
 describe('negative regex (!~) tests', function() {
-    var matchme = require('../dist/commonjs/matchme'),
+    var matchme = require('../matchme'),
         expect = require('expect.js'),
         testdata = require('./helpers/testdata');
     
