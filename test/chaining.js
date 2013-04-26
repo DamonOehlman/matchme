@@ -1,8 +1,8 @@
-describe('chaining', function() {
-    var matchme = require('../matchme'),
-        expect = require('expect.js'),
-        testdata = require('./helpers/testdata');
+var assert = require('assert'),
+    matchme = require('../'),
+    testdata = require('./helpers/testdata');
 
+describe('chaining', function() {
     it('can chain matcher methods together', function() {
         var matcher = matchme(testdata.fred);
         
@@ -10,7 +10,7 @@ describe('chaining', function() {
             .equals('name', 'fred')
             .gt('age', 15);
 
-        expect(matcher.ok).to.be.ok();
+        assert(matcher.ok);
     });
     
     it('chaining methods works in a logical AND kind of way', function() {
@@ -20,6 +20,6 @@ describe('chaining', function() {
             .equals('name', 'fred')
             .gt('age', 25);
 
-        expect(matcher.ok).to.not.be.ok();
+        assert(! matcher.ok);
     });
 });
