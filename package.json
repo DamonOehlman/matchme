@@ -7,7 +7,7 @@
     "match",
     "filter"
   ],
-  "version": "0.1.6",
+  "version": "0.2.0",
   "dependencies": {},
   "devDependencies": {
     "underscore": "1.4.x",
@@ -15,7 +15,6 @@
   },
   "testling": {
     "files": "test/*.js",
-
     "browsers": [
       "ie/9",
       "ie/10",
