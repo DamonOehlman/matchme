@@ -8,7 +8,9 @@
     "filter"
   ],
   "version": "0.2.0",
-  "dependencies": {},
+  "dependencies": {
+    "lang-js": ">= 0.0.0"  
+  },
   "devDependencies": {
     "underscore": "1.4.x",
     "tape": "0.3.x"

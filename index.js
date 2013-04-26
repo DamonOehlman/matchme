@@ -1,13 +1,4 @@
-var reExpr = /([\w\.]+)\s*([\><\!\=]\=?)\s*([\-\w\.]+)/,
-    reQuotedExpr = /([\w\.]+)\s*([\><\!\=]\=?)\s*\"([^\"]+)\"/,
-    reRegexExpr = /([\w\.]+)\s*([\=\!]\~)\s*(\/[^\s]+\/\w*)/,
-    reRegex = /^\/(.*)\/(\w*)$/,
-    reBool = /^(true|false)$/i,
-    reFalsyWords = /(undefined|null|false)/g,
-    reTruthyWords = /(true)/g,
-    reWords = /([\w\.]{2,})/,
-    reSillyFn = /0\(.*?\)/g,
-    exprLookups = {
+var exprLookups = {
         '==': ['equals'],
         '>':  ['gt'],
         '>=': ['gte'],
@@ -20,7 +11,9 @@ var reExpr = /([\w\.]+)\s*([\><\!\=]\=?)\s*([\-\w\.]+)/,
     wordReplacements = {
         and: '&&',
         or: '||'
-    };
+    },
+    ample = require('./ample');
+
 
 /**
  * class Matcher
@@ -144,85 +137,9 @@ Matcher.prototype = {
     },
     
     query: function(text) {
-        var match;
-        
-        // evaluate expressions
-        text = this._evaluateExpressions(text, reQuotedExpr);
-        text = this._evaluateExpressions(text, reRegexExpr);
-        text = this._evaluateExpressions(text, reExpr);
-        
-        // replace falsy words with 0s and truthy words with 1s
-        text = text.replace(reFalsyWords, '0').replace(reTruthyWords, '1');
-        
-        // find any remaining standalone words
-        match = reWords.exec(text);
-        while (match) {
-            var replacement = wordReplacements[match[0].toLowerCase()];
-            
-            // if we don't have a replacement for a word then look for the value of the property on the target
-            if ((! replacement) && this.target) {
-                replacement = this._val(match[0]) ? true : false;
-            }
-            
-            text = text.slice(0, match.index) + replacement + text.slice(match.index + match[0].length);
-            
-            // replace falsy words with 0s and truthy words with 1s
-            text = text.replace(reFalsyWords, '0').replace(reTruthyWords, '1');
-            
-            // run the test again
-            match = reWords.exec(text);
-        }
-        
-        // replace peoples attempts at including functions with 0
-        text = text.replace(reSillyFn, '0');
-        
-        // evaluate the expression
-        try {
-            this.ok = eval(text) == true;
-        }
-        catch (e) {
-            this.ok = false;
-            this._errtext = text;
-        }
-        
+        var query = new ample();
+        this.ok = query.evaluate(text, this.target);
         return this;
-    },
-    
-    /** internal
-    * Matcher#_evaluateExpressions(text, expr)
-    *
-    **/
-    _evaluateExpressions: function(text, expr) {
-        var match = expr.exec(text);
-            
-        while (match) {
-            var fns = exprLookups[match[2]] || [],
-                result = {
-                    ok: fns.length > 0
-                },
-                val1 = parseFloat(match[1]) || match[1],
-                val2 = parseFloat(match[3]) || match[3];
-                
-            // if value 2 is a boolean, then parse it
-            if (reBool.test(val2)) {
-                val2 = val2 == 'true';
-            }
-            
-            // iterate through the required functions in order and evaluate the result
-            for (var ii = 0, count = fns.length; ii < count; ii++) {
-                var evaluator = this[fns[ii]];
-                
-                // if we have the evaluator, then run it
-                if (evaluator) {
-                    evaluator.call(this, val1, val2, result);
-                }
-            }
-            
-            text = text.slice(0, match.index) + result.ok + text.slice(match.index + match[0].length);
-            match = expr.exec(text);
-        }
-        
-        return text;
     },
     
     _val: function(prop) {
