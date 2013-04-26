@@ -4,6 +4,8 @@ This is an experimental library that will allow object matching based on a simpl
 
 <a href="http://travis-ci.org/#!/DamonOehlman/matchme"><img src="https://secure.travis-ci.org/DamonOehlman/matchme.png" alt="Build Status"></a>
 
+[![browser support](https://ci.testling.com/DamonOehlman/matchme.png)](https://ci.testling.com/DamonOehlman/matchme)
+
 ## Simple Example
 
 <a href="https://www.runnable.com/#damonoehlman/matchme/app.js/launch" target="_blank"><img src="https://www.runnable.com/external/styles/assets/runnablebtn.png" style="width:67px;height:25px;"></a>  
