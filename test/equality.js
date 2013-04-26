@@ -1,35 +1,35 @@
-describe('== tests', function() {
-    var matchme = require('../matchme'),
-        expect = require('expect.js'),
-        testdata = require('./helpers/testdata');
+var matchme = require('../'),
+    test = require('tape'),
+    testdata = require('./helpers/testdata');
 
-    it('can test an object for equality', function() {
-        var result = matchme(testdata.fred, 'name == fred');
-        
-        expect(result).to.be.ok();
-    });
+test('== tests', function(t) {
+    var matcher;
+
+    t.plan(5);
+
+    t.ok(matchme(testdata.fred, 'name == fred'), 'can test an object for equality');
+
+
+    matcher = matchme(testdata.fred);
+    t.ok(
+        matcher.equals('name', 'fred').ok,
+        'can test an object for equality through the function interfaces'
+    );
+
+    matcher = matchme(testdata.fred, { caseSensitive: true });
+    t.notOk(
+        matcher.equals('name', 'fred').ok,
+        'fails on a case-sensitive match with incorrect case'
+    );
     
-    it('can test an object for equality through the function interfaces', function() {
-        var matcher = matchme(testdata.fred);
-        
-        expect(matcher.equals('name', 'fred').ok).to.be.ok();
-    });
+    matcher = matchme(testdata.fred, { caseSensitive: true });
+    t.ok(
+        matcher.equals('name', 'Fred').ok,
+        'passes a case-sensitive match with matching case'
+    );
     
-    it('fails on a case-sensitive match with incorrect case', function() {
-        var matcher = matchme(testdata.fred, { caseSensitive: true });
-        
-        expect(matcher.equals('name', 'fred').ok).to.not.be.ok();
-    });
-    
-    it('passes a case-sensitive match with matching case', function() {
-        var matcher = matchme(testdata.fred, { caseSensitive: true });
-        
-        expect(matcher.equals('name', 'Fred').ok).to.be.ok();
-    });
-    
-    it('can test using quoted strings', function() {
-        var result = matchme(testdata.fred, 'pet == "flying badger"');
-       
-        expect(result).to.be.ok();
-    });
+    t.ok(
+        matchme(testdata.fred, 'pet == "flying badger"'),
+        'can test using quoted strings'
+    );
 });

@@ -11,10 +11,10 @@
   "dependencies": {},
   "devDependencies": {
     "underscore": "1.4.x",
-    "mocha": "1.9.x"
+    "tape": "0.3.x"
   },
   "testling": {
-    "files": "test/chaining.js",
+    "files": "test/*.js",
     "harness": "mocha",
 
     "browsers": [
