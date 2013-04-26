@@ -1,7 +1,7 @@
 {
   "name": "matchme",
   "description": "Simple Object Query Language",
-  "author": "Damon Oehlman <damon.oehlman@sidelab.com>",
+  "author": "Damon Oehlman <damon.oehlman@gmail.com>",
   "tags": [
     "query",
     "match",
@@ -33,7 +33,7 @@
     "url": "http://github.com/DamonOehlman/matchme/issues"
   },
   "scripts": {
-    "test": "mocha --reporter spec"
+    "test": "./node_modules/.bin/tape test/*.js"
   },
   "contributors": []
 }
