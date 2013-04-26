@@ -20,7 +20,9 @@ var reExpr = /([\w\.]+)\s*([\><\!\=]\=?)\s*([\-\w\.]+)/,
     wordReplacements = {
         and: '&&',
         or: '||'
-    };
+    },
+    ample = require('./ample');
+
 
 /**
  * class Matcher
@@ -144,47 +146,8 @@ Matcher.prototype = {
     },
     
     query: function(text) {
-        var match;
-        
-        // evaluate expressions
-        text = this._evaluateExpressions(text, reQuotedExpr);
-        text = this._evaluateExpressions(text, reRegexExpr);
-        text = this._evaluateExpressions(text, reExpr);
-        
-        // replace falsy words with 0s and truthy words with 1s
-        text = text.replace(reFalsyWords, '0').replace(reTruthyWords, '1');
-        
-        // find any remaining standalone words
-        match = reWords.exec(text);
-        while (match) {
-            var replacement = wordReplacements[match[0].toLowerCase()];
-            
-            // if we don't have a replacement for a word then look for the value of the property on the target
-            if ((! replacement) && this.target) {
-                replacement = this._val(match[0]) ? true : false;
-            }
-            
-            text = text.slice(0, match.index) + replacement + text.slice(match.index + match[0].length);
-            
-            // replace falsy words with 0s and truthy words with 1s
-            text = text.replace(reFalsyWords, '0').replace(reTruthyWords, '1');
-            
-            // run the test again
-            match = reWords.exec(text);
-        }
-        
-        // replace peoples attempts at including functions with 0
-        text = text.replace(reSillyFn, '0');
-        
-        // evaluate the expression
-        try {
-            this.ok = eval(text) == true;
-        }
-        catch (e) {
-            this.ok = false;
-            this._errtext = text;
-        }
-        
+        var query = new ample();
+        this.ok = query.evaluate(text, this.target);
         return this;
     },
     
