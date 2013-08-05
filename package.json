@@ -2,16 +2,10 @@
   "name": "matchme",
   "description": "Simple Object Query Language",
   "author": "Damon Oehlman <damon.oehlman@gmail.com>",
-  "tags": [
-    "query",
-    "match",
-    "filter"
-  ],
   "version": "0.2.0",
-  "dependencies": {},
   "devDependencies": {
-    "underscore": "1.4.x",
-    "tape": "0.3.x"
+    "underscore": "~1.5.1",
+    "tape": "~1.0.4"
   },
   "testling": {
     "files": "test/*.js",
@@ -32,7 +26,20 @@
     "url": "http://github.com/DamonOehlman/matchme/issues"
   },
   "scripts": {
-    "test": "./node_modules/.bin/tape test/*.js"
+    "test": "$(npm bin)/tape test/*.js"
   },
-  "contributors": []
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "tape": "~1.0.4",
+    "underscore": "~1.5.1"
+  },
+  "keywords": [
+    "query",
+    "match",
+    "filter"
+  ],
+  "license": "MIT"
 }
