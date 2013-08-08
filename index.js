@@ -8,8 +8,8 @@
   This is an experimental library that will allow object matching based on a
   simple query language plus chainable function interface.
 
-  [!
-  [Build Status]
+  [
+  ![Build Status]
   (https://travis-ci.org/DamonOehlman/matchme.png?branch=master)
   ](https://travis-ci.org/DamonOehlman/matchme)
 
@@ -268,6 +268,8 @@ Matcher.prototype = {
   },
 
   /**
+  ## Internal Helpers
+
   ### _evaluateExpressions(text, expr)
 
   **/

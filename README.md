@@ -3,8 +3,8 @@
 This is an experimental library that will allow object matching based on a
 simple query language plus chainable function interface.
 
-[!
-[Build Status]
+[
+![Build Status]
 (https://travis-ci.org/DamonOehlman/matchme.png?branch=master)
 ](https://travis-ci.org/DamonOehlman/matchme)
 
@@ -80,6 +80,8 @@ Equality check
 ### regex(prop, value, result?)
 
 ### query(text)
+
+## Internal Helpers
 
 ### _evaluateExpressions(text, expr)
 
