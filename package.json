@@ -2,7 +2,7 @@
   "name": "matchme",
   "description": "Simple Object Query Language",
   "author": "Damon Oehlman <damon.oehlman@gmail.com>",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "testling": {
     "files": "test/all.js",
     "browsers": [
