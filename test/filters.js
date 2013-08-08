@@ -6,7 +6,7 @@ var matchme = require('../'),
 
 
 test('can find objects that are called fred', function(t) {
-    var results = matchme.filter(testArray, 'name == fred');
+    var results = matchme.filter(testArray, 'name == "Fred"');
     
     t.plan(2);
     t.ok(results);
@@ -14,7 +14,7 @@ test('can find objects that are called fred', function(t) {
 });
 
 test('can find objects that are called fred (using underscore)', function(t) {
-    var results = _.filter(testdata, matchme.filter('name == fred'));
+    var results = _.filter(testdata, matchme.filter('name == "Fred"'));
     
     t.plan(2);
     t.ok(results);

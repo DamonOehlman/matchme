@@ -4,6 +4,6 @@ var matchme = require('../'),
 
 test('!= tests', function(t) {
     t.plan(2);
-    t.ok(matchme(testdata.fred, 'name != bob'));
-    t.notOk(matchme(testdata.fred, 'name != fred'));
+    t.ok(matchme(testdata.fred, 'name != "Bob"'));
+    t.notOk(matchme(testdata.fred, 'name != "Fred"'));
 });

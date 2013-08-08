@@ -1,5 +1,4 @@
 /* jshint node: true */
-/* jshint evil: true */
 'use strict';
 
 /**
@@ -55,15 +54,8 @@
 
 **/
 
-var reExpr = /([\w\.]+)\s*([\><\!\=]\=?)\s*([\-\w\.]+)/;
-var reQuotedExpr = /([\w\.]+)\s*([\><\!\=]\=?)\s*\"([^\"]+)\"/;
-var reRegexExpr = /([\w\.]+)\s*([\=\!]\~)\s*(\/[^\s]+\/\w*)/;
-var reRegex = /^\/(.*)\/(\w*)$/;
-var reBool = /^(true|false)$/i;
-var reFalsyWords = /(undefined|null|false)/g;
-var reTruthyWords = /(true)/g;
-var reWords = /([\w\.]{2,})/;
-var reSillyFn = /0\(.*?\)/g;
+var Parser = require('./parser');
+
 var exprLookups = {
   '==': ['equals'],
   '>':  ['gt'],
@@ -158,16 +150,9 @@ Matcher.prototype = {
     result = result || this;
     if (result.ok && this.target) {
       testVal = this._val(prop);
-      strings = (typeof testVal == 'string' || testVal instanceof String) &&
-        (typeof value == 'string' || value instanceof String);
 
       // if the test value is a string and the value is a string
-      if (strings && (! this.opts.caseSensitive)) {
-        result.ok = testVal.toLowerCase() === value.toLowerCase();
-      }
-      else {
-        result.ok = testVal === value;
-      }
+      result.ok = testVal === value;
     }
     
     return this;
@@ -215,125 +200,27 @@ Matcher.prototype = {
     return this;
   },
 
-  /**
-  ### query(text)
-
-  **/
   query: function(text) {
-    var match;
-    var replacement;
-    
-    // evaluate expressions
-    text = this._evaluateExpressions(text, reQuotedExpr);
-    text = this._evaluateExpressions(text, reRegexExpr);
-    text = this._evaluateExpressions(text, reExpr);
-    
-    // replace falsy words with 0s and truthy words with 1s
-    text = text.replace(reFalsyWords, '0').replace(reTruthyWords, '1');
-    
-    // find any remaining standalone words
-    match = reWords.exec(text);
-    while (match) {
-      replacement = wordReplacements[match[0].toLowerCase()];
-      
-      // if we don't have a replacement for a word then look for the value
-      // of the property on the target
-      if ((! replacement) && this.target) {
-        replacement = this._val(match[0]) ? true : false;
-      }
-      
-      text = text.slice(0, match.index) + replacement +
-        text.slice(match.index + match[0].length);
-      
-      // replace falsy words with 0s and truthy words with 1s
-      text = text.replace(reFalsyWords, '0').replace(reTruthyWords, '1');
-      
-      // run the test again
-      match = reWords.exec(text);
-    }
-    
-    // replace peoples attempts at including functions with 0
-    text = text.replace(reSillyFn, '0');
-    
-    // evaluate the expression
-    try {
-      this.ok = !!eval(text);
-    }
-    catch (e) {
-      this.ok = false;
-      this._errtext = text;
-    }
-    
+    var query = new Parser();
+    this.ok = query.evaluate(text, this.target);
     return this;
   },
-
-  /**
-  ## Internal Helpers
-
-  ### _evaluateExpressions(text, expr)
-
-  **/
-  _evaluateExpressions: function(text, expr) {
-    var match = expr.exec(text);
-    var fns;
-    var result;
-    var val1;
-    var val2;
-    var ii;
-    var count;
-    var evaluator;
-        
-    while (match) {
-      fns = exprLookups[match[2]] || [];
-      result = { ok: fns.length > 0 };
-      val1 = parseFloat(match[1]) || match[1];
-      val2 = parseFloat(match[3]) || match[3];
-          
-      // if value 2 is a boolean, then parse it
-      if (reBool.test(val2)) {
-        val2 = val2 == 'true';
-      }
-      
-      // iterate through the required functions in order and evaluate
-      // the result
-      for (ii = 0, count = fns.length; ii < count; ii++) {
-        evaluator = this[fns[ii]];
-        
-        // if we have the evaluator, then run it
-        if (evaluator) {
-          evaluator.call(this, val1, val2, result);
-        }
-      }
-      
-      text = text.slice(0, match.index) + result.ok +
-        text.slice(match.index + match[0].length);
-
-      match = expr.exec(text);
-    }
     
-    return text;
-  },
-  
-  /**
-  ### _val(prop)
-
-  **/
   _val: function(prop) {
     var value = this.target[prop];
     var props;
 
-    // if the value is undefined, we'll attempt looking for
-    // nested properties
+    // if the value is undefined, we'll attempt looking for nested properties
     if (typeof value == 'undefined') {
       props = prop.split('.');
       if (props.length > 1) {
         value = this.target;
         while (value && props.length) {
-          value = value[props.shift()];
+            value = value[props.shift()];
         }
       }
     }
-    
+
     return value;
   }
 };
