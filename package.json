@@ -39,8 +39,5 @@
     "filter"
   ],
   "license": "MIT",
-  "dependencies": {
-    "tape": "~1.0.4",
-    "underscore": "~1.5.1"
-  }
+  "dependencies": {}
 }
