@@ -28,5 +28,15 @@
     "filter"
   ],
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {},
+  "testling": {
+    "files": "test/all.js",
+    "browsers": {
+      "ie": [ "latest" ],
+      "ff": [ "latest", "nightly" ],
+      "chrome": [ "latest", "canary" ],
+      "opera": [ "latest", "next" ],
+      "safari": [ "latest" ]
+    }
+  }
 }
