@@ -3,17 +3,6 @@
   "description": "Simple Object Query Language",
   "author": "Damon Oehlman <damon.oehlman@gmail.com>",
   "version": "1.0.0",
-  "testling": {
-    "files": "test/all.js",
-    "browsers": [
-      "ie/9",
-      "ie/10",
-      "chrome/latest",
-      "firefox/latest",
-      "safari/latest",
-      "opera/latest"
-    ]
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/DamonOehlman/matchme.git"
@@ -23,7 +12,7 @@
   },
   "scripts": {
     "test": "$(npm bin)/tape test/all.js",
-    "gendocs": "sourcecat | emu > README.md"
+    "gendocs": "gendocs > README.md"
   },
   "main": "index.js",
   "directories": {
