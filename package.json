@@ -19,7 +19,7 @@
     "test": "test"
   },
   "devDependencies": {
-    "tape": "~1.0.4",
+    "tape": "~2.3.0",
     "underscore": "~1.5.1"
   },
   "keywords": [
@@ -32,11 +32,24 @@
   "testling": {
     "files": "test/all.js",
     "browsers": {
-      "ie": [ "latest" ],
-      "ff": [ "latest", "nightly" ],
-      "chrome": [ "latest", "canary" ],
-      "opera": [ "latest", "next" ],
-      "safari": [ "latest" ]
+      "ie": [
+        "latest"
+      ],
+      "ff": [
+        "latest",
+        "nightly"
+      ],
+      "chrome": [
+        "latest",
+        "canary"
+      ],
+      "opera": [
+        "latest",
+        "next"
+      ],
+      "safari": [
+        "latest"
+      ]
     }
   }
 }
