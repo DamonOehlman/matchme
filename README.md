@@ -6,8 +6,7 @@ simple query language plus chainable function interface.
 
 [![NPM](https://nodei.co/npm/matchme.png)](https://nodei.co/npm/matchme/)
 
-[![Build Status](https://img.shields.io/travis/DamonOehlman/matchme.svg?branch=master)](https://travis-ci.org/DamonOehlman/matchme)
-
+[![Build Status](https://img.shields.io/travis/DamonOehlman/matchme.svg?branch=master)](https://travis-ci.org/DamonOehlman/matchme) 
 [![browser support](https://ci.testling.com/DamonOehlman/matchme.png)](https://ci.testling.com/DamonOehlman/matchme)
 
 
@@ -47,8 +46,29 @@ console.log(people.filter(matchme.filter('age > 40')));
 // --> [ { name: 'Bill', age: 42 }]
 ```
 
-For more complicated examples, I'd recommend having a look at the
-tests (which run from both the browser and node).
+## Pull-Stream Example
+
+An example using the [pull-stream](https://github.com/dominictarr/pull-stream)
+module is shown below.  This example reads data from a data file downloaded
+from [geonames](http://geonames.org) and loaded in through the
+[geonames](https://github.com/DamonOehlman/geonames) module which provides
+a pull-stream source.
+
+```js
+var geonames = require('geonames');
+var pull = require('pull-stream');
+var matchme = require('matchme');
+
+pull(
+  geonames.read(__dirname + '/data/AU.txt'),
+  pull.filter(matchme.filter('featureClass == P && population > 50000')),
+  pull.take(10),
+  pull.collect(function(err, places) {
+    console.log('found ' + places.length + ' matching places');
+  })
+);
+
+```
 
 ## A Note regarding Eval
 
@@ -61,13 +81,12 @@ the parsing required to properly deal with complex expressions
 
 ### gt(prop, value, result?)
 
-Check whether the specified property of the target object is greater than 
+Check whether the specified property of the target object is greater than
 the specified value.  If the optional result argument is passed to the
 function then the result is passed back in that object. If not the result
 is stored in the local `ok` property of the matcher instance.  Other
 comparison methods use the same principle as this function.
 
- 
 ### gte(prop, value, result?)
 
 Greater than or equal to check.
