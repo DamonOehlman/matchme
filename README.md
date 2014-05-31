@@ -9,7 +9,7 @@ simple query language plus chainable function interface.
 
 [![browser support](https://ci.testling.com/DamonOehlman/matchme.png)](https://ci.testling.com/DamonOehlman/matchme)
 
-[![Build Status](https://img.shields.io/travis/DamonOehlman/matchme.svg?branch=master)](https://travis-ci.org/DamonOehlman/matchme) [![Dependency Status](https://david-dm.org/DamonOehlman/matchme.svg)](https://david-dm.org/DamonOehlman/matchme) 
+[![unstable](https://img.shields.io/badge/stability-unstable-yellowgreen.svg)](https://github.com/badges/stability-badges) [![Build Status](https://img.shields.io/travis/DamonOehlman/matchme.svg?branch=master)](https://travis-ci.org/DamonOehlman/matchme) [![Dependency Status](https://david-dm.org/DamonOehlman/matchme.svg)](https://david-dm.org/DamonOehlman/matchme) 
 
 ## 2.0 Breaking Changes
 
@@ -92,7 +92,7 @@ var matchme = require('matchme');
 
 pull(
   geonames.read(__dirname + '/data/AU.txt'),
-  pull.filter(matchme.filter('name =~ /Island$/ && featureCode != ISL')),
+  pull.filter(matchme.filter('name =? /Island$/ && featureCode != ISL')),
   pull.drain(function(place) {
     console.log(place.name + ' might seem like an island but is in fact a ' + place.featureCode);
   })
