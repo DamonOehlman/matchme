@@ -43,9 +43,9 @@
 
 **/
 
-var reExpr = /([\w\.]+)\s*([\><\!\=]\=?)\s*([\-\w\.]+)/;
-var reQuotedExpr = /([\w\.]+)\s*([\><\!\=]\=?)\s*[\"\']([^\"\']+)[\"\']/;
-var reRegexExpr = /([\w\.]+)\s*([\=\!]\~)\s*(\/[^\s]+\/\w*)/;
+var reExpr = /([\w\.]+)\s*([\><\!\=\~][\=\~]?)\s*([\-\w\.]+)/;
+var reQuotedExpr = /([\w\.]+)\s*([\><\!\=\~][\=\~]?)\s*[\"\']([^\"\']+)[\"\']/;
+var reRegexExpr = /([\w\.]+)\s*([\=\!]\?)\s*(\/[^\s]+\/\w*)/;
 var reRegex = /^\/(.*)\/(\w*)$/;
 var reBool = /^(true|false)$/i;
 var reFalsyWords = /(undefined|null|false)/g;
@@ -54,13 +54,16 @@ var reWords = /([\w\.]{2,})/;
 var reSillyFn = /0\(.*?\)/g;
 var exprLookups = {
   '==': ['equals'],
+  '=~': ['looseEquals'],
+  '~=': ['looseEquals'],
+  '!~': ['looseEquals', 'not'],
   '>':  ['gt'],
   '>=': ['gte'],
   '<':  ['lt'],
   '<=': ['lte'],
   '!=': ['equals', 'not'],
-  '=~': ['regex'],
-  '!~': ['regex', 'not']
+  '=?': ['regex'],
+  '!?': ['regex', 'not']
 };
 
 var wordReplacements = {
@@ -140,6 +143,20 @@ Matcher.prototype = {
   Equality check
   **/
   equals: function(prop, value, result) {
+    result = result || this;
+    if (result.ok && this.target) {
+      result.ok = this._val(prop) === value;
+    }
+
+    return this;
+  },
+
+  /**
+  ### looseEquals(prop, value, result?)
+
+  Equality check (case insensitive)
+  **/
+  looseEquals: function(prop, value, result) {
     var testVal;
     var strings;
 
@@ -150,12 +167,9 @@ Matcher.prototype = {
         (typeof value == 'string' || value instanceof String);
 
       // if the test value is a string and the value is a string
-      if (strings && (! this.opts.caseSensitive)) {
-        result.ok = testVal.toLowerCase() === value.toLowerCase();
-      }
-      else {
-        result.ok = testVal === value;
-      }
+      result.ok = strings ?
+        testVal.toLowerCase() === value.toLowerCase() :
+        testVal === value;
     }
 
     return this;
