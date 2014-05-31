@@ -44,7 +44,7 @@
 **/
 
 var reExpr = /([\w\.]+)\s*([\><\!\=]\=?)\s*([\-\w\.]+)/;
-var reQuotedExpr = /([\w\.]+)\s*([\><\!\=]\=?)\s*\"([^\"]+)\"/;
+var reQuotedExpr = /([\w\.]+)\s*([\><\!\=]\=?)\s*[\"\']([^\"\']+)[\"\']/;
 var reRegexExpr = /([\w\.]+)\s*([\=\!]\~)\s*(\/[^\s]+\/\w*)/;
 var reRegex = /^\/(.*)\/(\w*)$/;
 var reBool = /^(true|false)$/i;
