@@ -61,10 +61,29 @@ var matchme = require('matchme');
 
 pull(
   geonames.read(__dirname + '/data/AU.txt'),
-  pull.filter(matchme.filter('featureClass == P && population > 50000')),
-  pull.take(10),
+  pull.filter(matchme.filter('featureClass == P && population > 500000')),
+//   pull.take(10),
   pull.collect(function(err, places) {
     console.log('found ' + places.length + ' matching places');
+//     console.log(places);
+  })
+);
+
+```
+
+Additionally, here is another example that uses a matchme regex to identify
+places that are named as Islands but are classified as something else:
+
+```js
+var geonames = require('geonames');
+var pull = require('pull-stream');
+var matchme = require('matchme');
+
+pull(
+  geonames.read(__dirname + '/data/AU.txt'),
+  pull.filter(matchme.filter('name =~ /Island$/ && featureCode != ISL')),
+  pull.drain(function(place) {
+    console.log(place.name + ' might seem like an island but is in fact a ' + place.featureCode);
   })
 );
 

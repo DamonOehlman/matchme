@@ -29,6 +29,11 @@
 
   <<< examples/pull-stream.js
 
+  Additionally, here is another example that uses a matchme regex to identify
+  places that are named as Islands but are classified as something else:
+
+  <<< examples/pull-stream-regex.js
+
   ## A Note regarding Eval
 
   In general, the use of `eval` is considered evil.  I have avoided using it
