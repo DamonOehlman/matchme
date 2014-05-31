@@ -115,10 +115,9 @@ pull(
 
 ## A Note regarding Eval
 
-In general, the use of `eval` is considered evil.  I have avoided using it
-for many, many years.  That said matchme makes use of eval to simplifying
-the parsing required to properly deal with complex expressions
-(BOMDAS, etc).
+The `matchme` module uses `eval` as it's highly pragmatic in this situation.
+Feel free to create breaking tests if you think there are exploite introduced
+from it's use.
 
 ## Matcher prototype reference
 
