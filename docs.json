@@ -1,9 +1,10 @@
 {
   "badges": {
     "nodeico": true,
-    "travis": true,
     "testling": true,
-    "codeship": "11e72d40-f353-0130-c7c7-2ef823c90cdd"
+    "status": "unstable",
+    "travis": true,
+    "david": true
   },
 
   "license": {}

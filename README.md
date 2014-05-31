@@ -6,10 +6,10 @@ simple query language plus chainable function interface.
 
 [![NPM](https://nodei.co/npm/matchme.png)](https://nodei.co/npm/matchme/)
 
-[![Build Status](https://img.shields.io/travis/DamonOehlman/matchme.svg?branch=master)](https://travis-ci.org/DamonOehlman/matchme) 
+
 [![browser support](https://ci.testling.com/DamonOehlman/matchme.png)](https://ci.testling.com/DamonOehlman/matchme)
 
-
+[![Build Status](https://img.shields.io/travis/DamonOehlman/matchme.svg?branch=master)](https://travis-ci.org/DamonOehlman/matchme) [![Dependency Status](https://david-dm.org/DamonOehlman/matchme.svg)](https://david-dm.org/DamonOehlman/matchme) 
 
 ## Simple Example
 
@@ -59,13 +59,14 @@ var geonames = require('geonames');
 var pull = require('pull-stream');
 var matchme = require('matchme');
 
+console.log('Places with a population > 500,000 (limited to first 10):');
+
 pull(
   geonames.read(__dirname + '/data/AU.txt'),
   pull.filter(matchme.filter('featureClass == P && population > 500000')),
-//   pull.take(10),
-  pull.collect(function(err, places) {
-    console.log('found ' + places.length + ' matching places');
-//     console.log(places);
+  pull.take(10),
+  pull.drain(function(place) {
+    console.log(place.name);
   })
 );
 
