@@ -3,10 +3,16 @@
 'use strict';
 
 /**
-  # Match Me
+  # matchme
 
   This is an experimental library that will allow object matching based on a
   simple query language plus chainable function interface.
+
+  ## 2.0 Breaking Changes
+
+  - The equality operator `==` is now a __case-senstive__ match
+  - A loose equality operator `~=` can be used for case insensitive matches.
+  - Regex operators are now implemented using `=?` for a match and `!?` for not.
 
   ## Simple Example
 

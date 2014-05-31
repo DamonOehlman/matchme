@@ -1,4 +1,4 @@
-# Match Me
+# matchme
 
 This is an experimental library that will allow object matching based on a
 simple query language plus chainable function interface.
@@ -10,6 +10,12 @@ simple query language plus chainable function interface.
 [![browser support](https://ci.testling.com/DamonOehlman/matchme.png)](https://ci.testling.com/DamonOehlman/matchme)
 
 [![Build Status](https://img.shields.io/travis/DamonOehlman/matchme.svg?branch=master)](https://travis-ci.org/DamonOehlman/matchme) [![Dependency Status](https://david-dm.org/DamonOehlman/matchme.svg)](https://david-dm.org/DamonOehlman/matchme) 
+
+## 2.0 Breaking Changes
+
+- The equality operator `==` is now a __case-senstive__ match
+- A loose equality operator `~=` can be used for case insensitive matches.
+- Regex operators are now implemented using `=?` for a match and `!?` for not.
 
 ## Simple Example
 
