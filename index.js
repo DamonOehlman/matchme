@@ -14,6 +14,19 @@
   - A loose equality operator `~=` can be used for case insensitive matches.
   - Regex operators are now implemented using `=?` for a match and `!?` for not.
 
+  ## Operator Summary
+
+  - `==` - equality
+  - `!=` - inequality
+  - `=~` - loose equality (case insensitive string matching)
+  - `!~` - loose inequality
+  - `>`  - greater than
+  - `>=` - greater or equal to
+  - `<`  - less than
+  - `<=` - less than or equal to
+  - `=?` - regex equality
+  - `!?` - regex inequality
+
   ## Simple Example
 
   Matching is done at an object level against object properties, e.g.
