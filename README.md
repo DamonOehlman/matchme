@@ -19,17 +19,21 @@ Matching is done at an object level against object properties, e.g.
 var matchme = require('matchme');
 var test = { name: 'Ted', age: 40 };
 
+console.log(matchme(test, 'name == Ted'));
+// --> true
+
 console.log(matchme(test, 'name == ted'));
+// --> false
+
+console.log(matchme(test, 'name ~= ted'));
 // --> true
 
 console.log(matchme(test, 'age > 25'));
 // --> true
 
-console.log(matchme(test, { caseSensitive: true }, 'name == ted'));
+console.log(matchme(test, 'name ~= ted && age > 45'));
 // --> false
 
-console.log(matchme(test, 'name == ted && age > 45'));
-// --> false
 ```
 
 In addition `matchme` can be used in conjunction the filter
@@ -122,6 +126,10 @@ Less than or equal to check
 ### equals(prop, value, result?)
 
 Equality check
+
+### looseEquals(prop, value, result?)
+
+Equality check (case insensitive)
 
 ### not(prop, value, result?)
 
